@@ -169,7 +169,15 @@
         <mxCell id="FUGTz4qIXXT97q6Xcxap-29" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="1" vertex="1">
           <mxGeometry height="30" width="30" x="365" y="500" as="geometry" />
         </mxCell>
+<<<<<<< Updated upstream
         <mxCell id="FUGTz4qIXXT97q6Xcxap-30" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="0...*" vertex="1">
+=======
+<<<<<<< HEAD
+        <mxCell id="FUGTz4qIXXT97q6Xcxap-30" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="0&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;...*&lt;/span&gt;" vertex="1">
+=======
+        <mxCell id="FUGTz4qIXXT97q6Xcxap-30" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="0...*" vertex="1">
+>>>>>>> a507193f5605f24df6db466ea25110af01def22a
+>>>>>>> Stashed changes
           <mxGeometry height="30" width="40" x="340" y="580" as="geometry" />
         </mxCell>
         <mxCell id="FUGTz4qIXXT97q6Xcxap-31" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="1" vertex="1">
