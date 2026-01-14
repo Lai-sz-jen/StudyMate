@@ -26,6 +26,9 @@ class CourseManager:
         get_plan(course_ID: str, plan_ID) -> Plan
             return the plan object specified within the course specified
         
+        get_log(course_ID: str, plan_ID) -> str
+            return the changes log of the specified plan
+        
         delete(course_ID: str) -> None
             delete the course with specified ID
             

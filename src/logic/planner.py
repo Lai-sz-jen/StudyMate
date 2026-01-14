@@ -2,7 +2,7 @@
 """
 Created on Wed Jan 14 12:10:57 2026
 
-Contain Scheduler class.
+Contain Planner class.
 
 @author: laisz
 """
@@ -53,7 +53,8 @@ class Planner:
             move the task to the day specified
             
         remove(task_ID: str) -> Task
-            remove a task from the plan
+            remove a task from the active plan. The task will be marked as
+            abandoned
         
         check_stuatus(course_ID: str) -> bool
             check whether the course delay exceed the threshold
