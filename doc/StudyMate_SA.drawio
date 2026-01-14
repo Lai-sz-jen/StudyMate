@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.3.0">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.3.1">
   <diagram name="Page-1" id="Pt9tEzh7vFRaeYsDP6kd">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -7,7 +7,7 @@
         <mxCell id="d69W10LdFGlWlMf3XTkd-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
           <mxGeometry height="70" width="410" x="200" y="360" as="geometry" />
         </mxCell>
-        <mxCell id="d69W10LdFGlWlMf3XTkd-2" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;direction=east;alignment=center;align=center;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Common Layer&lt;/h1&gt;&lt;p&gt;values&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;enums&lt;/p&gt;" vertex="1">
+        <mxCell id="d69W10LdFGlWlMf3XTkd-2" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;direction=east;alignment=center;align=center;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Common Layer&lt;/h1&gt;&lt;p&gt;values&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;enums&amp;nbsp;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;dataclass&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;structures&lt;/p&gt;" vertex="1">
           <mxGeometry height="70" width="350" x="230" y="360" as="geometry" />
         </mxCell>
         <mxCell id="d69W10LdFGlWlMf3XTkd-16" edge="1" parent="1" source="d69W10LdFGlWlMf3XTkd-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d69W10LdFGlWlMf3XTkd-1">
@@ -21,8 +21,8 @@
             <mxPoint x="405.2352941176471" y="330" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="d69W10LdFGlWlMf3XTkd-10" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;direction=east;alignment=center;align=center;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Domain Layer&lt;/h1&gt;&lt;div&gt;Course &lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Plan&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Task&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&amp;nbsp;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Profile&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="70" width="370" x="220" y="260" as="geometry" />
+        <mxCell id="d69W10LdFGlWlMf3XTkd-10" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;direction=east;alignment=center;align=center;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Domain Layer&lt;/h1&gt;&lt;div&gt;Course &lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Plan&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;CheckList&amp;nbsp;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Schedule&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;Unit&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Profile&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="410" x="200" y="260" as="geometry" />
         </mxCell>
         <mxCell id="d69W10LdFGlWlMf3XTkd-17" edge="1" parent="1" source="d69W10LdFGlWlMf3XTkd-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d69W10LdFGlWlMf3XTkd-9">
           <mxGeometry relative="1" as="geometry" />
@@ -30,7 +30,7 @@
         <mxCell id="d69W10LdFGlWlMf3XTkd-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
           <mxGeometry height="70" width="410" x="200" y="160" as="geometry" />
         </mxCell>
-        <mxCell id="d69W10LdFGlWlMf3XTkd-13" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;direction=east;alignment=center;align=center;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Logic Layer&lt;/h1&gt;&lt;p&gt;Scheduler&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;CourseManager&lt;/p&gt;" vertex="1">
+        <mxCell id="d69W10LdFGlWlMf3XTkd-13" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;direction=east;alignment=center;align=center;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Logic Layer&lt;/h1&gt;&lt;p&gt;Planner&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Scheduler&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;CourseManager&amp;nbsp;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Profiler&lt;/p&gt;" vertex="1">
           <mxGeometry height="70" width="350" x="230" y="160" as="geometry" />
         </mxCell>
         <mxCell id="d69W10LdFGlWlMf3XTkd-23" edge="1" parent="1" source="d69W10LdFGlWlMf3XTkd-19" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d69W10LdFGlWlMf3XTkd-12">
@@ -48,8 +48,8 @@
         <mxCell id="d69W10LdFGlWlMf3XTkd-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
           <mxGeometry height="70" width="310" x="420" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="d69W10LdFGlWlMf3XTkd-22" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;direction=east;alignment=center;align=center;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Infrastructure Layer&lt;/h1&gt;&lt;p&gt;StorageManager&lt;/p&gt;" vertex="1">
-          <mxGeometry height="70" width="260" x="445" y="40" as="geometry" />
+        <mxCell id="d69W10LdFGlWlMf3XTkd-22" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;direction=east;alignment=center;align=center;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Infrastructure Layer&lt;/h1&gt;&lt;p&gt;StorageManager&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt; OCRParser&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;NotificationService&lt;/p&gt;" vertex="1">
+          <mxGeometry height="70" width="310" x="420" y="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
