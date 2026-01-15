@@ -17,16 +17,22 @@ class CourseManager:
             create a course using specified parameters and return course ID
         
         units(course_ID: str) -> Unit
-            return the TOC of the course specified
+            return a copy of the TOC of the course specified
         
-        rename_unit(course_ID: str, path: tuple, title: str) -> None
+        edit_unit(course_ID: str, path: tuple, new_info: UnitInfo) -> None
             rename the unit at the specific path in the specified course
             to the title given
             
-        get_plan(course_ID: str, plan_ID) -> Plan
+        add_unit(course_ID: str, parent_path: tuple, unit_info: UnitInfo) -> None
+            add another unit under the parent unit
+        
+        remove_unit(course_ID: str, path: tuple) -> UnitInfo
+            remove all units under the specified path    
+        
+        get_plan(plan_ID: str) -> Plan
             return the plan object specified within the course specified
         
-        get_log(course_ID: str, plan_ID) -> str
+        get_log(plan_ID) -> str
             return the changes log of the specified plan
         
         delete(course_ID: str) -> None

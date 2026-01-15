@@ -26,7 +26,7 @@ class Planner:
         
         
     ## Methods:
-        create(course_ID: str, start_date: datetime, due_date: datetime=None,
+        plan(course_ID: str, start_date: datetime, due_date: datetime | None,
                *exclude: tuple) -> str
             create a checklist and a schedule for finishing the course and 
             return the ID of the plan

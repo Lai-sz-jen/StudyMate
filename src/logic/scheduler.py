@@ -25,7 +25,7 @@ class Scheduler:
         
         
     ## Methods:
-        create(units: Unit, start_date: datetime, due_date: datetime=None
+        create(units: Unit, start_date: datetime, due_date: datetime | None
                ) -> Schedule
             create a schedule for finishing the units and 
             return the schedule

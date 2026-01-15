@@ -21,22 +21,22 @@ class Profiler:
     
     
     ## Methods
-        review(course_ID) -> None
-            generate the weekly report and add it to the course
+        review(plan_ID) -> None
+            generate the weekly report and add it to the plan
             
-        sum_up(course_ID, response: tuple) -> None
+        sum_up(plan_ID, response: tuple) -> None
             generate the final report base on the previous reports and
             the response of the survey. Also update the user's profile
             accordingly
             
-        view(course_ID) -> list[Report]
-            return all the reports of a course in issuing order
+        view(plan_ID) -> list[Report]
+            return all the reports of a plan in issuing order
 
-        visualize_progress(course_ID) -> 
+        visualize_progress(plan_ID) -> 
             return the bar chart of time spent each day
         
-        visualize_velocity(course_ID) ->
+        visualize_velocity(plan_ID) ->
             return the line chart of the trend of user's velocity through
-            out the course
+            out the plan
     """
     
