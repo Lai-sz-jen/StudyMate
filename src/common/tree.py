@@ -25,8 +25,12 @@ class Tree(Iterable):
     def is_empty(self) -> bool:
         return (not self.__root.has_child()) and self.__root.value is None
     
-    def _to_branch(self, path: tuple[int]) -> Node:
-        node = self.__root
+    
+    def _to_branch(self, path: tuple[int], origin: Node=None) -> Node:
+        if origin is None:
+            node = self.__root
+        else:
+            node = origin
         
         location = []
         for index in path:
@@ -38,6 +42,14 @@ class Tree(Iterable):
             
         return node
     
+    
+    def _dfs(self, start_node: Node) -> Iterator[Node]:
+        yield start_node
+        
+        for child in start_node:
+            yield from self._dfs(child)
+            
+    
     def add(self, value: object, *parent_path: int) -> tuple[int]:
         if value is None:
             raise ValueError(f"Invalid Value: {value}")
@@ -48,28 +60,6 @@ class Tree(Iterable):
         
     
     def insert(self, value: object, *path: int) -> tuple[int]:
-        """
-        Insert a value into the specified location. The only methods to edit
-        root value.
-
-        Parameters
-        ----------
-        value : object
-            DESCRIPTION.
-        path : int
-            DESCRIPTION.
-
-        Raises
-        ------
-        ValueError
-            DESCRIPTION.
-
-        Returns
-        -------
-        tuple[int]
-            DESCRIPTION.
-
-        """
         if value is None:
             raise ValueError(f"Invalid Value: {value}")
         if len(path) < 1:
@@ -83,60 +73,75 @@ class Tree(Iterable):
             raise ValueError("Invalid Path: skipping leaf nodes")
             
         return path
-        
+    
+    
     def remove(self, *path: int) -> object:
         if len(path) < 1:
             raise ValueError("Cannot remove the root node")
             
-        node = self._to_branch(path[:-1])            
-        if not node.get_child(path[-1]).is_leaf:
-            raise ValueError("Cannot remove a non leaf node (use prune instead)")
+        parent = self._to_branch(path[:-1])
+        target = self._to_branch(path[-1:], parent)
+        
+        if not target.is_leaf:
+            raise ValueError("Cannot remove a non-leaf node (use prune instead)")
             
-        value = node.prune(path[-1])
+        value = parent.prune(path[-1])
         return value
 
+
     def prune(self, *path: int) -> None:
-        node = self._to_branch(path[:-1])
-        node.prune(path[-1])
+        if len(path) < 1:
+            raise ValueError("Cannot remove the root node")
         
+        parent = self._to_branch(path[:-1])
+        self._to_branch(path[-1:], parent) # path check
+        parent.prune(path[-1])
+
+    
     def reset(self, value: object, *path: int) -> object:
         if value is None:
-            raise ValueError(f"Invalid value: {value}")
+            raise ValueError(f"Invalid Value: {value}")
             
         node = self._to_branch(path)
         temp = node.value
         node.value = value
         return temp
     
+    
     def get(self, *path: int) -> object:
         node = self._to_branch(path)
         return deepcopy(node.value)
     
+    
     def get_leaves(self) -> Iterator[object]:
+        if not self.__root.has_child() and self.__root.value is None:
+            return
+        
         for node in self._dfs(self.__root):
             if node.is_leaf:
                 yield node.value
-                
+    
+    
     def copy(self) -> Tree:
         new_tree = Tree("")
         new_tree.__root = self.__root.copy()
         return new_tree
     
-    def __iter__(self) -> Iterator[object]:        
-        for node in self._dfs(self.__root):
-            yield node.value
     
-    def _dfs(self, start_node: Node) -> Iterator[Node]:
-        yield start_node
-        
-        for child in start_node:
-            yield from self._dfs(child)        
+    def __iter__(self) -> Iterator[object]:
+        if self.__root.value is not None:
+            yield self.__root.value
+            
+        for child in self.__root:
+            for node in self._dfs(child):
+                yield node.value
+            
     
     def __str__(self) -> str:
         def _build_str(node: Node, prefix: str, is_last: bool):
             if is_last:
                 connector = "\u2514\u2500\u2500"            # "└──"
-                new_prefix = " " * 6                        # "      "
+                new_prefix = prefix + " " * 6                        # "      "
             else:
                 connector = "\u251C\u2500\u2500"            # "├──"
                 new_prefix = prefix + "\u2502" + " " * 4    # "│    "
@@ -188,6 +193,7 @@ class Node:
             raise IndexError("Index out of range")
         
         return self.__child[index]
+
     
     def branch(self, node: Node, index: int =None) -> int:
         if index is None:
@@ -219,12 +225,12 @@ class Node:
         
 
 if __name__ == "__main__":
-    tree = Tree(1)
+    tree = Tree()
     tree.add("2b", )
-    tree.insert("2c", (1, ))
+    tree.insert("2c", 1)
     tree.add("2d")
-    tree.add("3a", (0, ))
-    tree.insert("2a", (0, ))
+    tree.add("3a", 0)
+    tree.insert("2a", 0)
     print(tree)
     for i in tree:
         print(i)
