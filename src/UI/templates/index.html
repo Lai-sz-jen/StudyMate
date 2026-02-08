@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyMate - Adaptive Study Scheduler</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">📚</span>
+                <span class="logo-text">StudyMate</span>
+            </div>
+            <ul class="nav-items">
+                <li class="nav-item active" data-view="dashboard">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-label">Dashboard</span>
+                </li>
+                <li class="nav-item" data-view="courses">
+                    <span class="nav-icon">📖</span>
+                    <span class="nav-label">Courses</span>
+                </li>
+                <li class="nav-item" data-view="plans">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-label">Plans</span>
+                </li>
+                <li class="nav-item" data-view="reports">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-label">Reports</span>
+                </li>
+                <li class="nav-item" data-view="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Settings</span>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <section class="view active" id="dashboard-view">
+                <header class="view-header">
+                    <h1>Dashboard</h1>
+                    <p class="subtitle">Welcome back! Here's your study overview.</p>
+                </header>
+
+                <!-- Alert Banner (for threshold exceeded) -->
+                <div class="alert-banner hidden" id="alert-banner">
+                    <span class="alert-icon">⚠️</span>
+                    <span class="alert-text">You're 3 days behind on Mathematics. Consider recalibrating your
+                        plan.</span>
+                    <button class="btn btn-small btn-accent">Recalibrate</button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid stats-grid-2">
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-plans">-</span>
+                            <span class="stat-label">Active Plans</span>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-card-wide">
+                        <div class="stat-icon">⏰</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Upcoming Deadlines</span>
+                            <div class="deadline-list" id="deadline-list">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's Agenda -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Today's Agenda</h2>
+                        <span class="date-badge" id="today-date"></span>
+                    </div>
+                    <div class="agenda-list" id="agenda-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Courses View -->
+            <section class="view" id="courses-view">
+                <header class="view-header">
+                    <h1>Courses</h1>
+                    <button class="btn btn-primary" id="btn-new-course">
+                        <span>+</span> New Course
+                    </button>
+                </header>
+
+                <div class="course-grid" id="course-list">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Create Course Modal -->
+                <div class="modal hidden" id="course-modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Create New Course</h2>
+                            <button class="modal-close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="tab-group">
+                                <button class="tab active" data-tab="manual">Manual</button>
+                                <button class="tab" data-tab="isbn">ISBN Lookup</button>
+                                <button class="tab" data-tab="ocr">OCR (Beta)</button>
+                            </div>
+                            <div class="tab-content active" id="tab-manual">
+                                <div class="form-group">
+                                    <label>Course Name</label>
+                                    <input type="text" class="input" id="course-name-input"
+                                        placeholder="e.g., Calculus I">
+                                </div>
+                                <div class="form-group">
+                                    <label>Number of Chapters/Units</label>
+                                    <input type="number" class="input" id="course-units-input" placeholder="10" min="1"
+                                        max="50" value="5">
+                                </div>
+                            </div>
+                            <div class="tab-content" id="tab-isbn">
+                                <div class="form-group">
+                                    <label>ISBN Number</label>
+                                    <input type="text" class="input" placeholder="978-0-13-468599-1">
+                                    <button class="btn btn-secondary">Lookup</button>
+                                </div>
+                            </div>
+                            <div class="tab-content" id="tab-ocr">
+                                <div class="form-group">
+                                    <label>Upload Table of Contents Image</label>
+                                    <div class="dropzone">
+                                        <span>📷 Drop image here or click to upload</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary modal-close">Cancel</button>
+                            <button class="btn btn-primary" id="btn-create-course">Create Course</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Plans View -->
+            <section class="view" id="plans-view">
+                <header class="view-header">
+                    <h1>Study Plans</h1>
+                    <button class="btn btn-primary" id="btn-new-plan">
+                        <span>+</span> New Plan
+                    </button>
+                </header>
+
+                <div class="plans-list" id="plans-list">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Calendar View -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Weekly Schedule</h2>
+                        <div class="week-nav">
+                            <button class="week-nav-btn" onclick="changeWeek(-1)">❮</button>
+                            <span class="week-range" id="week-range">Feb 10 - Feb 16, 2026</span>
+                            <button class="week-nav-btn" onclick="changeWeek(1)">❯</button>
+                        </div>
+                    </div>
+                    <div class="calendar-wrapper" id="calendar-wrapper">
+                        <div class="calendar-grid" id="calendar-grid">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Day Agenda Detail -->
+                    <div class="day-agenda-panel" id="day-agenda-panel">
+                        <div class="day-agenda-header">
+                            <h3 id="day-agenda-title">Today's Tasks</h3>
+                            <span class="day-agenda-date" id="day-agenda-date">Feb 8, 2026</span>
+                        </div>
+                        <div class="day-agenda-list" id="day-agenda-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports View -->
+            <section class="view" id="reports-view">
+                <header class="view-header">
+                    <h1>Reports</h1>
+                </header>
+
+                <!-- Velocity Profile Section -->
+                <div class="panel profile-panel">
+                    <div class="panel-header">
+                        <h2>My Learning Velocity</h2>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <span class="profile-stat-value" id="profile-wpm">250</span>
+                            <span class="profile-stat-label">Reading Speed (wpm)</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="profile-stat-value" id="profile-pph">15</span>
+                            <span class="profile-stat-label">Pages / Hour</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="profile-stat-value" id="profile-retention">1.2x</span>
+                            <span class="profile-stat-label">Review Multiplier</span>
+                        </div>
+                    </div>
+                    <p class="profile-hint">These values help estimate how long tasks will take based on content length.
+                    </p>
+                </div>
+
+                <div class="reports-grid">
+                    <div class="panel chart-panel">
+                        <div class="panel-header">
+                            <h2>Planned vs Actual Progress</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="progress-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2>Plan History</h2>
+                        </div>
+                        <div class="history-list">
+                            <div class="history-item">
+                                <span class="history-name">Python Basics</span>
+                                <span class="history-status completed">Completed</span>
+                                <span class="history-date">Dec 2025</span>
+                            </div>
+                            <div class="history-item">
+                                <span class="history-name">Data Structures</span>
+                                <span class="history-status abandoned">Abandoned</span>
+                                <span class="history-date">Nov 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post-Plan Feedback -->
+                <div class="panel feedback-panel hidden">
+                    <div class="panel-header">
+                        <h2>Post-Plan Feedback</h2>
+                    </div>
+                    <div class="feedback-form">
+                        <div class="form-group">
+                            <label>How difficult was this material?</label>
+                            <div class="rating-group">
+                                <button class="rating-btn">1</button>
+                                <button class="rating-btn">2</button>
+                                <button class="rating-btn">3</button>
+                                <button class="rating-btn">4</button>
+                                <button class="rating-btn">5</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Satisfaction with your progress?</label>
+                            <div class="rating-group">
+                                <button class="rating-btn">1</button>
+                                <button class="rating-btn">2</button>
+                                <button class="rating-btn">3</button>
+                                <button class="rating-btn">4</button>
+                                <button class="rating-btn">5</button>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary">Submit Feedback</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings View -->
+            <section class="view" id="settings-view">
+                <header class="view-header">
+                    <h1>Settings</h1>
+                </header>
+
+                <div class="settings-grid">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2>Notifications</h2>
+                        </div>
+                        <div class="settings-group">
+                            <div class="setting-item">
+                                <label>Daily Reminder Time</label>
+                                <input type="time" class="input" value="09:00">
+                            </div>
+                            <div class="setting-item">
+                                <label>Enable Desktop Notifications</label>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-wide">
+                        <div class="panel-header">
+                            <h2>Weekly Availability</h2>
+                        </div>
+                        <div class="availability-grid">
+                            <div class="availability-row">
+                                <span class="day-label">Monday</span>
+                                <div class="time-dials" data-day="mon">
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('mon', 'h', 1)">▲</button>
+                                        <span class="dial-value" id="mon-h">2</span>
+                                        <button class="dial-btn" onclick="adjustDial('mon', 'h', -1)">▼</button>
+                                    </div>
+                                    <span class="dial-sep">:</span>
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('mon', 'm', 15)">▲</button>
+                                        <span class="dial-value" id="mon-m">00</span>
+                                        <button class="dial-btn" onclick="adjustDial('mon', 'm', -15)">▼</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="availability-row">
+                                <span class="day-label">Tuesday</span>
+                                <div class="time-dials" data-day="tue">
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('tue', 'h', 1)">▲</button>
+                                        <span class="dial-value" id="tue-h">2</span>
+                                        <button class="dial-btn" onclick="adjustDial('tue', 'h', -1)">▼</button>
+                                    </div>
+                                    <span class="dial-sep">:</span>
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('tue', 'm', 15)">▲</button>
+                                        <span class="dial-value" id="tue-m">00</span>
+                                        <button class="dial-btn" onclick="adjustDial('tue', 'm', -15)">▼</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="availability-row">
+                                <span class="day-label">Wednesday</span>
+                                <div class="time-dials" data-day="wed">
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('wed', 'h', 1)">▲</button>
+                                        <span class="dial-value" id="wed-h">2</span>
+                                        <button class="dial-btn" onclick="adjustDial('wed', 'h', -1)">▼</button>
+                                    </div>
+                                    <span class="dial-sep">:</span>
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('wed', 'm', 15)">▲</button>
+                                        <span class="dial-value" id="wed-m">00</span>
+                                        <button class="dial-btn" onclick="adjustDial('wed', 'm', -15)">▼</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="availability-row">
+                                <span class="day-label">Thursday</span>
+                                <div class="time-dials" data-day="thu">
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('thu', 'h', 1)">▲</button>
+                                        <span class="dial-value" id="thu-h">2</span>
+                                        <button class="dial-btn" onclick="adjustDial('thu', 'h', -1)">▼</button>
+                                    </div>
+                                    <span class="dial-sep">:</span>
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('thu', 'm', 15)">▲</button>
+                                        <span class="dial-value" id="thu-m">00</span>
+                                        <button class="dial-btn" onclick="adjustDial('thu', 'm', -15)">▼</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="availability-row">
+                                <span class="day-label">Friday</span>
+                                <div class="time-dials" data-day="fri">
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('fri', 'h', 1)">▲</button>
+                                        <span class="dial-value" id="fri-h">1</span>
+                                        <button class="dial-btn" onclick="adjustDial('fri', 'h', -1)">▼</button>
+                                    </div>
+                                    <span class="dial-sep">:</span>
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('fri', 'm', 15)">▲</button>
+                                        <span class="dial-value" id="fri-m">30</span>
+                                        <button class="dial-btn" onclick="adjustDial('fri', 'm', -15)">▼</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="availability-row">
+                                <span class="day-label">Saturday</span>
+                                <div class="time-dials" data-day="sat">
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('sat', 'h', 1)">▲</button>
+                                        <span class="dial-value" id="sat-h">0</span>
+                                        <button class="dial-btn" onclick="adjustDial('sat', 'h', -1)">▼</button>
+                                    </div>
+                                    <span class="dial-sep">:</span>
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('sat', 'm', 15)">▲</button>
+                                        <span class="dial-value" id="sat-m">00</span>
+                                        <button class="dial-btn" onclick="adjustDial('sat', 'm', -15)">▼</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="availability-row">
+                                <span class="day-label">Sunday</span>
+                                <div class="time-dials" data-day="sun">
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('sun', 'h', 1)">▲</button>
+                                        <span class="dial-value" id="sun-h">0</span>
+                                        <button class="dial-btn" onclick="adjustDial('sun', 'h', -1)">▼</button>
+                                    </div>
+                                    <span class="dial-sep">:</span>
+                                    <div class="dial">
+                                        <button class="dial-btn" onclick="adjustDial('sun', 'm', 15)">▲</button>
+                                        <span class="dial-value" id="sun-m">00</span>
+                                        <button class="dial-btn" onclick="adjustDial('sun', 'm', -15)">▼</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="availability-total">Total: <strong id="total-hours">9:30</strong> per week</p>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2>Data Management</h2>
+                        </div>
+                        <div class="settings-group">
+                            <div class="setting-item">
+                                <label>Export Database</label>
+                                <button class="btn btn-secondary">Export</button>
+                            </div>
+                            <div class="setting-item">
+                                <label>Import Database</label>
+                                <button class="btn btn-secondary">Import</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Time Input Modal (Global) -->
+    <div class="modal hidden" id="time-modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>Task Completed!</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="time-modal-task" id="time-modal-task"></p>
+                <div class="form-group">
+                    <label>How long did it take?</label>
+                    <div class="time-picker">
+                        <button class="time-btn" onclick="adjustTime(-15)">−</button>
+                        <span class="time-display" id="actual-time-display">45 min</span>
+                        <button class="time-btn" onclick="adjustTime(15)">+</button>
+                    </div>
+                    <input type="hidden" id="actual-time-input" value="45">
+                </div>
+                <p class="time-estimate-hint" id="time-estimate-hint"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Cancel</button>
+                <button class="btn btn-primary" id="btn-save-time">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>
